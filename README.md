@@ -1,21 +1,21 @@
 # docker-thunderbird
 
-    docker pull riazarbi/thunderbird:latest
-    docker run -d \
-      --net host \
-      --name thunderbird \
-      -e DISPLAY \
-      -v /tmp/.X11-unix:/tmp/.X11-unix:ro \
-      -u thunderbird \
-      -v thunderbird_config:/home/thunderbird/.thunderbird/ \
-      -v $HOME/Downloads:/home/thunderbird/Downloads \
-      -v /etc/localtime:/etc/localtime \
-      riazarbi/thunderbird thunderbird
-      
-      docker run \
-    -d \
-        --name thunderbird \
-    -v $HOME/.ssh/authorized_keys:/authorized_keys:ro \
-    -p 49158:22 \
-    -v ~/appdata/thunderbird:/home/docker/.thunderbird/ \
-    ironicbadger/docker-thunderbird
+On remote machine - 
+
+```
+docker run \
+  -it --rm \
+  --name thunderbird \
+  -v /home/$USER/.ssh/authorized_keys:/home/thunderbird/.ssh/authorized_keys:ro \
+  -v /data/thunderbird:/home/thunderbird/.thunderbird \
+  -p 49158:22 \
+  riazarbi/thunderbird
+```
+
+Then, in a separate terminal - 
+
+```
+ssh -C -o StrictHostKeyChecking=no -o "UserKnownHostsFile /dev/null" -X thunderbird@server -p 49158 thunderbird
+```
+
+
